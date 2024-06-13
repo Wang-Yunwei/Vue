@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import localforage from 'localforage';
 import ElementPlus from 'element-plus'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import 'element-plus/dist/index.css'
 import './assets/element-ui-reset.scss'
@@ -16,5 +17,9 @@ app.use(createPinia())
 app.use(router)
 app.use(localforage)
 app.use(ElementPlus)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
 
 app.mount('#app')
