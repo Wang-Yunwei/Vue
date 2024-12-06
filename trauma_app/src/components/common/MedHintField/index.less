@@ -1,0 +1,46 @@
+.med-hint-field-wrapper {
+  width: 100%;
+  .van-cell__title.van-field__label {
+    // width: auto;
+    margin-right: 20px;
+  }
+  &.no-link-arrow {
+    .van-field__left-icon {
+      margin-right: 10px;
+      .van-icon-warning {
+        color: orange;
+      }
+      .van-icon-success {
+        color: green;
+      }
+      .van-icon-cross {
+        color: red;
+      }
+    }
+    .van-icon.van-icon-arrow {
+      display: none; // 去除link状态下右箭头
+    }
+  }
+  .med-hint-field {
+    position: relative;
+    .van-field__error-message {
+      display: none;
+    }
+  }
+  .med-hint-field--bottom::after {
+    display: inline;
+    position: absolute;
+    box-sizing: border-box;
+    content: ' ';
+    pointer-events: none;
+    right: 0.42667rem;
+    bottom: 0;
+    left: 0.42667rem;
+    border-bottom: 3px solid #ebedf0;
+    -webkit-transform: scaleY(.5);
+    -ms-transform: scaleY(.5);
+    transform: scaleY(.5);
+  }
+
+}
+

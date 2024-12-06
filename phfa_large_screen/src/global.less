@@ -1,0 +1,180 @@
+html,
+body,
+#app,
+#root {
+  height: 100%;
+  padding: 0%;
+  margin: 0;
+  color:#fff
+}
+html {
+  font-size: 1px;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+h1{
+  font-weight: bold;
+}
+
+// common
+.txt-l {
+  text-align: left;
+}
+.txt-c {
+  text-align: center;
+}
+.txt-r {
+  text-align: right;
+}
+
+.flex-s-s {
+  display: flex;
+}
+
+.flex-c-c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-c-a {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.flex-c-b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-c-s {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-c-e {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// 四角装饰
+.corners {
+  &,
+  &-lg {
+    position: relative;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      height: calc(100% + 2px);
+      width: calc(100% + 2px);
+      pointer-events: none;
+      background: linear-gradient(
+            to bottom,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          left top no-repeat,
+        linear-gradient(
+            to right,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          left top no-repeat,
+        linear-gradient(
+            to bottom,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          right top no-repeat,
+        linear-gradient(
+            to left,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          right top no-repeat,
+        linear-gradient(
+            to top,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          left bottom no-repeat,
+        linear-gradient(
+            to right,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          left bottom no-repeat,
+        linear-gradient(
+            to top,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          right bottom no-repeat,
+        linear-gradient(
+            to left,
+            #3caceb 0%,
+            #3caceb 20%,
+            transparent 30%,
+            transparent 100%
+          )
+          right bottom no-repeat;
+      background-size: 10px 10px;
+    }
+  }
+  &-lg:before {
+    height: calc(100% + 4px);
+    width: calc(100% + 4px);
+    background-size: 20px 20px;
+  }
+}
+
+@level-color-1: #b41226;
+@level-color-2: #df6926;
+@level-color-3: #ff9900;
+@level-color-4: #fff;
+
+// 体征分级颜色
+.level-1 {
+  color: @level-color-1;
+}
+.level-2 {
+  color: @level-color-2;
+}
+.level-3 {
+  color: @level-color-3;
+}
+.level-4 {
+  color: @level-color-4;
+}
+
+.loading-modal .ant-modal-confirm-btns{
+  display: none;
+}

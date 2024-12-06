@@ -1,0 +1,29 @@
+.med-datepicker-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  &::after {
+    position: absolute;
+    box-sizing: border-box;
+    content: ' ';
+    pointer-events: none;
+    right: 0.426667rem;
+    bottom: 0;
+    left: 0.426667rem;
+    border-bottom: 0.026667rem solid #ebedf0;
+    -webkit-transform: scaleY(0.5);
+    -ms-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+  .med-datepicker-placeholder {
+    color: rgba(0, 0, 0, 0.26);
+  }
+  .med-datepicker-value {
+    color: rgba(0, 0, 0, 0.8);
+    overflow: auto;
+    flex-wrap: wrap;
+  }
+  .med-datepicker-arrow i.iconicon1svg-52 {
+    font-size: 36px;
+  }
+}

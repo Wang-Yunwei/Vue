@@ -1,0 +1,26 @@
+const getters = {
+  sidebar: (state) => state.app.sidebar,
+  size: (state) => state.app.size,
+  device: (state) => state.app.device,
+  visitedViews: (state) => state.tagsView.visitedViews,
+  cachedViews: (state) => state.tagsView.cachedViews,
+  businessToken: (state) => state.user.businessToken,
+  jwtToken: (state) => state.user.jwtToken,
+  userInfo: (state) => state.user.userInfo,
+  permissions: (state) => state.user.permissions,
+  roles: (state) => state.user.roles,
+  permission_routes: (state) => state.permission.routes,
+  errorLogs: (state) => state.errorLog.logs,
+  user: (state) => state.user.info,
+  hospitalArea: (state) => state.user.hospitalArea,
+  hospitalId: (state) => state.user.hospitalId,
+  dictionary: (state) => state.common.dictionary,
+  hospitalList: (state) => state.common.hospitalList,
+  doctorList: (state) => state.common.doctorList,
+  nurseList: (state) => state.common.nurseList,
+  driverList: (state) => state.common.driverList,
+  hospitalAreaList: (state) => state.common.hospitalAreaList,
+  patientInfo: (state) => state.patient.info,
+  missionStatus: (state) => state.mission.info.status
+}
+export default getters

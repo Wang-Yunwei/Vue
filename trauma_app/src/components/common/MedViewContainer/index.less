@@ -1,0 +1,27 @@
+.med-view-container-wrapper {
+  width: 100%;
+  height: 100%;
+  .med-view-container-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &.med-view-container-disable-scroll {
+    > .med-view-container-body {
+      overflow-y: hidden;
+    }
+  }
+  .med-view-container-bottom {
+    z-index: 1;
+    position: fixed;
+    height: 1.6rem;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: content-box;
+    background: #fff;
+  }
+  .med-view-container-bottom-hidden {
+    display: none;
+  }
+}

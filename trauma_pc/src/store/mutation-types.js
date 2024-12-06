@@ -1,0 +1,13 @@
+export const SET_INFO = 'SET_INFO'
+export const SET_DICDATA = 'SET_DICDATA'
+export const SET_HOSPITAL_AREA_LIST = 'SET_HOSPITAL_AREA_LIST'// 院区列表
+export const SET_RECEIVE_DEPT = 'SET_RECEIVE_DEPT'// 接诊科室
+export const SET_LEAVE_LOCATION_TIME = 'SET_LEAVE_LOCATION_TIME'// 离开现场时间
+export const SET_ARRIVE_DEPT_TIME = 'SET_ARRIVE_DEPT_TIME'// 到达科室时间
+export const SET_SYNCHRONIZE = 'SET_SYNCHRONIZE'// 同步
+export const SET_ADMITTING_DIAGNOSIS = 'SET_ADMITTING_DIAGNOSIS'// 入院诊断
+export const SET_PHFA_DEATH = 'SET_PHFA_DEATH'// 院前急救死亡
+export const SET_PHFA_DEATH_TIME = 'SET_PHFA_DEATH_TIME'// 院前急救死亡时间
+export const SET_PIAT_DEATH = 'SET_PIAT_DEATH'// 预检分诊死亡
+export const SET_RESCUE_ROOM = 'SET_RESCUE_ROOM'// 预检分诊 - 抢救室
+export const SET_OPERATING_ROOM = 'SET_OPERATING_ROOM'// 院内诊疗 - 手术室
