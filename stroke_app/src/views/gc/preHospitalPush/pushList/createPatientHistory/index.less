@@ -1,0 +1,44 @@
+@import '@/assets/styles/common/document/edit.less';
+
+.scroll-view {
+  /deep/ .van-cell {
+    .van-cell__title,
+    .van-cell__label {
+      font-size: 0.373rem;
+    }
+  }
+  /deep/ .van-radio-group.radio-btn-type {
+    .van-radio {
+      margin-right: 20px;
+
+      .van-radio__icon {
+        width: 0;
+        height: 0;
+        .van-icon {
+          width: 0;
+          height: 0;
+          display: none;
+          &:before {
+            display: none;
+          }
+        }
+        &.van-radio__icon--checked {
+          width: 0;
+          height: 0;
+        }
+
+        &.van-radio__icon--checked + .van-radio__label {
+          background: #5e74fe;
+          color: #fff;
+        }
+      }
+
+      .van-radio__label {
+        border: 1px solid #dadada;
+        padding: 5px 20px;
+        border-radius: 44px;
+        margin: 0;
+      }
+    }
+  }
+}

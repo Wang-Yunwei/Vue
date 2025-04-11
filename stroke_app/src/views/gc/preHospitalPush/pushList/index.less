@@ -1,0 +1,157 @@
+@import '@/assets/styles/common/search/wrapper.less';
+
+.firstaid-list-wrapper {
+  &-search {
+    .van-search__content {
+      border: 1px solid #dadada;
+      /deep/ .van-field__value {
+        padding: 0 20px;
+      }
+    }
+  }
+
+  &-list {
+    height: calc(100vh - 420px);
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .card-item {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 28px rgb(212, 212, 212);
+    overflow: hidden;
+
+    + .card-item {
+      margin-top: 20px;
+    }
+
+    &-top {
+      padding: 0 32px;
+      background-color: rgb(247, 247, 247);
+      font-size: 25px;
+      color: #797979;
+      height: 60px;
+      line-height: 60px;
+
+      span:nth-of-type(1) {
+        padding-right: 20px;
+      }
+
+      span:nth-of-type(2) {
+        font-size: 28px;
+        font-weight: 400;
+        color: #474e6c;
+        letter-spacing: 1px;
+      }
+    }
+
+    &-center {
+      padding: 12px 32px 32px;
+
+      .card-item-title {
+        &-left {
+          height: 80px;
+          line-height: 80px;
+
+          > * {
+            margin-right: 17px;
+            white-space: nowrap;
+          }
+
+          .name {
+            font-size: 40px;
+            color: #202020;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 2.8rem;
+          }
+
+          .gender {
+            &:before {
+              content: '未知';
+            }
+
+            &.male:before {
+              //content: '\e63d';
+              content: '男';
+              font-size: 30px;
+              //font-weight: 800;
+              //color: #2b65f8;
+            }
+
+            &.female:before {
+              //content: '\e63a';
+              content: '女';
+              font-size: 30px;
+              //font-weight: 800;
+              //color: #f86359;
+            }
+          }
+
+          .age {
+            color: #202020;
+            font-size: 30px;
+          }
+
+          .badge {
+            font-size: 30px;
+            line-height: 42px;
+            padding: 0 15px;
+            border-radius: 21px;
+            background: rgba(94, 116, 253, 0.1);
+            color: #5e74fe;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &.from {
+              font-size: 20px;
+
+              &.first-aid {
+                color: #f86359;
+                background: rgba(255, 83, 62, 0.1);
+              }
+            }
+          }
+        }
+
+        &-right {
+          .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #ff533e;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      > p {
+        color: black;
+        line-height: 26px;
+        font-size: 26px;
+        margin-top: 10px;
+      }
+    }
+
+    &-bottom {
+      border-top: 1px solid #ececec;
+      padding: 16px 0;
+      margin: 0 32px;
+
+      .van-icon {
+        font-size: 40px;
+      }
+
+      .btns {
+        .van-button {
+          font-size: 24px;
+          height: auto;
+          padding: 10px 30px;
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}

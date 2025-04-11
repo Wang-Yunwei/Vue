@@ -1,17 +1,19 @@
 <template>
   <el-container style="margin: 0 10px;">
     <el-header style="background-color: #f5f6fb;height:10%;padding-top: 22px;">
-      <el-form ref="qcSearchParam" :inline="true" :model="qcSearchParam">
+      <el-form ref="form" :inline="true" :model="qcSearchParam">
         <el-form-item label="时间类型">
           <el-select v-model="qcSearchParam.dateType">
             <el-option v-for="(item, index) in dateTypeList" :key="index" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="开始时间" prop="startDate">
-          <el-date-picker v-model="qcSearchParam.startDate" type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="startDatePicker" @change="$set(qcSearchParam, 'range', '')" />
+          <el-date-picker v-model="qcSearchParam.startDate" type="date" placeholder="选择日期" format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd" :picker-options="startDatePicker" @change="$set(qcSearchParam, 'range', '')" />
         </el-form-item>
         <el-form-item label="结束时间" prop="endDate">
-          <el-date-picker v-model="qcSearchParam.endDate" type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="endDatePicker" @change="$set(qcSearchParam, 'range', '')" />
+          <el-date-picker v-model="qcSearchParam.endDate" type="date" placeholder="选择日期" format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd" :picker-options="endDatePicker" @change="$set(qcSearchParam, 'range', '')" />
         </el-form-item>
         <el-form-item label="" prop="range">
           <el-radio-group v-model="qcSearchParam.range" size="medium" @change="changeTime">
@@ -23,16 +25,21 @@
             <el-radio-button label="6">最近一年</el-radio-button>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="患者类型" placeholder="请选择">
+          <el-select v-model="qcSearchParam.patientType" clearable>
+            <el-option v-for="(item, index) in PATIENT_TYPE" :key="index" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button block type="primary" @click="onSearch">查询</el-button>
-          <el-button @click="resetForm('qcSearchParam')">重置</el-button>
         </el-form-item>
       </el-form>
     </el-header>
     <el-divider />
     <el-main style="padding: initial;">
       <div>
-        <el-table ref="qcTable" :data="qcData" max-height="840" :header-cell-style="() => 'font-size:1rem'" :cell-style="() => 'cursor:pointer;'" @row-click="doClick">
+        <el-table ref="qcTable" :data="qcData" max-height="840" :header-cell-style="() => 'font-size:1rem'"
+          :cell-style="() => 'cursor:pointer;'" @row-click="doClick">
           <el-table-column width="30" />
           <el-table-column label="序号" prop="id" width="70" />
           <el-table-column label="指标名称" width="400">
@@ -65,9 +72,10 @@
 import moment from 'moment'
 import store from '@/store'
 import { mapGetters } from 'vuex'
-import qcConstant from '@/constant/qcConstant'
+import { DictionariesMixin } from '@/mixins/index'
 export default {
   name: 'QcIndex',
+  mixins: [DictionariesMixin],
   data() {
     return {
       dateTypeList: [
@@ -85,10 +93,9 @@ export default {
       },
       startDatePicker: this.beginDate(),
       endDatePicker: this.processDate(),
-
       searchData: {},
       qcData: [],
-      multilineIdArr: qcConstant.multilineIdArr
+      multilineIdArr: ['4', '17']
     }
   },
   computed: {
@@ -109,53 +116,37 @@ export default {
     onSearch() {
       this.searchBarHandle(this.qcSearchParam)
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
     changeTime(val) {
       // 本月
       if (val === '1') {
-        this.qcSearchParam.startDate = moment()
-          .startOf('month')
-          .format('YYYY-MM-DD')
+        this.qcSearchParam.startDate = moment().startOf('month').format('YYYY-MM-DD')
         this.qcSearchParam.endDate = moment().endOf('day').format('YYYY-MM-DD')
       }
       // 本季度
       if (val === '2') {
-        this.qcSearchParam.startDate = moment()
-          .startOf('quarter')
-          .format('YYYY-MM-DD')
+        this.qcSearchParam.startDate = moment().startOf('quarter').format('YYYY-MM-DD')
         this.qcSearchParam.endDate = moment().endOf('day').format('YYYY-MM-DD')
       }
       // 本年
       if (val === '3') {
-        this.qcSearchParam.startDate = moment()
-          .startOf('year')
-          .format('YYYY-MM-DD')
+        this.qcSearchParam.startDate = moment().startOf('year').format('YYYY-MM-DD')
         this.qcSearchParam.endDate = moment().endOf('day').format('YYYY-MM-DD')
       }
       // 最近一个月
       if (val === '4') {
-        this.qcSearchParam.startDate = moment()
-          .subtract(1, 'month')
-          .format('YYYY-MM-DD')
+        this.qcSearchParam.startDate = moment().subtract(1, 'month').format('YYYY-MM-DD')
         this.qcSearchParam.endDate = moment().endOf('day').format('YYYY-MM-DD')
       }
       // 最近三个月
       if (val === '5') {
-        this.qcSearchParam.startDate = moment()
-          .subtract(3, 'month')
-          .format('YYYY-MM-DD')
+        this.qcSearchParam.startDate = moment().subtract(3, 'month').format('YYYY-MM-DD')
         this.qcSearchParam.endDate = moment().endOf('day').format('YYYY-MM-DD')
       }
       // 最近一年
       if (val === '6') {
-        this.qcSearchParam.startDate = moment()
-          .subtract(1, 'year')
-          .format('YYYY-MM-DD')
+        this.qcSearchParam.startDate = moment().subtract(1, 'year').format('YYYY-MM-DD')
         this.qcSearchParam.endDate = moment().endOf('day').format('YYYY-MM-DD')
       }
-      this.onSearch()
     },
     // 获取几年前，默认一年前的今天
     getLastYear(endDate) {

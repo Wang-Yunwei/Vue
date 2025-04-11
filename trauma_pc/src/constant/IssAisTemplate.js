@@ -1,4 +1,4 @@
-export const issAis = () => [
+export default () => [
     {
         "image": require('@/assets/images/头颈部.png'),
         "name": "头颈部",
@@ -1907,4 +1907,3 @@ export const issAis = () => [
         ]
     }
 ]
-export default issAis

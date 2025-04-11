@@ -1,0 +1,80 @@
+@import '@/assets/styles/common/document/edit.less';
+.med-ecg-wrapper {
+  .task-electrocardiogram-uploaded {
+    padding: 20px;
+  }
+  /deep/ .card-item {
+    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 0;
+    border: 1px solid #e7e9ea;
+    position: relative;
+
+    .pin {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      right: 20px;
+      background: linear-gradient(50deg, #008aff, #2fb6fc);
+      box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.35);
+      border-radius: 0px 0px 15px 15px;
+      color: #fff;
+      padding: 20px;
+
+      &.spec {
+        background: linear-gradient(50deg, #ea5c4b, #f9a74e);
+      }
+    }
+
+    .van-image {
+      vertical-align: top;
+      width: 100%;
+      height: 400px;
+    }
+
+    .van-button {
+      color: #696969;
+    }
+
+    .info {
+      font-size: 28px;
+      line-height: 3;
+      padding: 0 20px;
+
+      .infoTime {
+        color: #696969;
+      }
+
+      .infoE {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 200px;
+      }
+    }
+  }
+  /deep/ .van-swipe-cell__right {
+    width: 180px;
+
+    .del-icon {
+      height: 100px;
+      width: 100px;
+      background: red;
+      color: #fff;
+      font-size: 40px;
+      padding: 20px;
+      border-radius: 50%;
+      text-align: center;
+      margin-left: 20px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  /deep/ .van-popup--center {
+    background-color: transparent;
+  }
+  /deep/ .med-view-container-body {
+    height: calc(100vh - 226px) !important;
+  }
+}

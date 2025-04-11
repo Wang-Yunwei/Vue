@@ -63,7 +63,6 @@ import { mapGetters } from 'vuex'
 import LineCustomChart from '@/components/MedChart/LineCustomChart'
 import { TableLabel } from '@/model/commonModel'
 import { MonthTableLabel } from '@/model/commonModel'
-import qcConstant from '@/constant/qcConstant'
 import storage from 'store'
 
 export default {
@@ -73,10 +72,10 @@ export default {
   },
   data() {
     return {
-      validRadioArr: qcConstant.validRadioArr,
-      deadRadioArr: qcConstant.deadRadioArr,
-      meetingArr: qcConstant.meetingArr,
-      multilineIdArr: qcConstant.multilineIdArr,
+      validRadioArr: ['9', '13', '15', '16'],
+      deadRadioArr: ['10', '14'],
+      meetingArr: ['19'],
+      multilineIdArr: ['4', '17'],
       rowData: [],
       searchData: {},
       detailData: {},
@@ -130,14 +129,14 @@ export default {
     queryTypeData(params) {
       // 添加Detail列名
       this.tableLabel = {
-        ...TableLabel[qcConstant.tableLabelName + params.pointerType]
+        ...TableLabel['tableLabel' + params.pointerType]
       }
       params = { ...params, hospitalArea: this.hospitalArea }
       this.queryData(params)
     },
     queryData(params) {
       this.$api.statByPointerType(params).then((res) => {
-        if (res.code === qcConstant.code) {
+        if (res.code === '000000') {
           this.detailData = res.body
           this.lineShow(res.body)
           this.detailList = res.body.detailList
@@ -161,9 +160,7 @@ export default {
     doShow(ra) {
       this.rowData = ra
       this.monthTableLabel = {
-        ...MonthTableLabel[
-        qcConstant.monthTableLabelName + this.searchData.pointerType
-        ]
+        ...MonthTableLabel['monthTableLabel' + this.searchData.pointerType]
       }
       this.monthDetailList =
         this.detailData.monthPatientsMap[ra.month].patientList
@@ -180,11 +177,7 @@ export default {
       } else if (this.multilineIdArr.includes(this.searchData.pointerType)) {
         // 如果是类型4 重新赋值monthTableLabel覆盖之前的赋值信息
         this.monthTableLabel = {
-          ...MonthTableLabel[
-          qcConstant.monthTableLabelName +
-          this.searchData.pointerType +
-          ra.lineType
-          ]
+          ...MonthTableLabel['monthTableLabel' + this.searchData.pointerType + ra.lineType]
         }
         this.monthDetailList =
           this.detailData.monthPatientsMap[ra.month][

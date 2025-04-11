@@ -4,7 +4,8 @@
             <med-subtitle>接诊信息</med-subtitle>
             <el-row :gutter="20">
                 <el-col :span="6" v-if="['03', '04', '05'].includes(visitType)">
-                    <el-form-item label="发病时间" prop="attackTime" :rules="[{ required: true, message: '请选择发病时间', trigger: 'blur' }]">
+                    <el-form-item label="发病时间" prop="attackTime"
+                        :rules="[{ required: true, message: '请选择发病时间', trigger: 'blur' }]">
                         <el-col :span="18">
                             <med-datetime v-model="form.attackTime" :disabled="isReadonly" v-clear />
                         </el-col>
@@ -12,13 +13,15 @@
                 </el-col>
                 <el-col :span="6">
                     <el-form-item label="发病地址" v-if="['03', '04', '05'].includes(visitType)">
-                        <el-input v-model="form.address" type="textarea" autosize :readonly="isReadonly" :maxlength="100" />
+                        <el-input v-model="form.address" type="textarea" autosize :readonly="isReadonly"
+                            :maxlength="100" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="自行来院方式" v-if="visitType === '03'">
                         <el-radio-group v-model="form.selfVisitType" :disabled="isReadonly">
-                            <el-radio v-for="(item, index) in SELF_VISIT_0001" :key="index" :label="item.value" @click.native.prevent="clickRadio(item.value, 'selfVisitType')">
+                            <el-radio v-for="(item, index) in SELF_VISIT_0001" :key="index" :label="item.value"
+                                @click.native.prevent="clickRadio(item.value, 'selfVisitType')">
                                 {{ item.label }}
                             </el-radio>
                         </el-radio-group>
@@ -27,7 +30,8 @@
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="6" v-if="!['01', '02'].includes(visitType)">
-                    <el-form-item label="到达医院时间" prop="arriveHospitalTime" :rules="[{ required: true, message: '请选择到达医院时间', trigger: 'blur' }]">
+                    <el-form-item label="到达医院时间" prop="arriveHospitalTime"
+                        :rules="[{ required: true, message: '请选择到达医院时间', trigger: 'blur' }]">
                         <el-col :span="18">
                             <med-datetime v-model="form.arriveHospitalTime" :disabled="isReadonly" v-clear />
                         </el-col>
@@ -35,24 +39,38 @@
                 </el-col>
                 <el-col :span="6">
                     <el-form-item label="门诊号">
-                        <AssociationPatient v-model="form.regNo" placeholder="门诊号" :type="['01', '02'].includes(visitType) ? '2' : '3'" />
+                        <AssociationPatient v-model="form.regNo" placeholder="门诊号"
+                            :type="['01', '02'].includes(visitType) ? '2' : '3'" />
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
-                    <el-form-item label="病情判断" prop="diagnosis" :rules="[{ required: true, message: '请选择病情判断', trigger: 'blur' }]">
+                <el-col :span="6">
+                    <el-form-item label="病情判断" prop="diagnosis"
+                        :rules="[{ required: true, message: '请选择病情判断', trigger: 'blur' }]">
                         <el-radio-group v-model="form.diagnosis" :disabled="isReadonly">
-                            <el-radio v-for="(item, index) in DIAGNOSIS_0001" :key="index" :label="item.value" @click.native.prevent="clickRadio(item.value, 'diagnosis')">
+                            <el-radio v-for="(item, index) in DIAGNOSIS_0001" :key="index" :label="item.value"
+                                @click.native.prevent="clickRadio(item.value, 'diagnosis')">
                                 {{ item.label }}
                             </el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>
+                <el-col :span="6">
+                    <el-form-item label="患者类型">
+                        <el-select v-model="form.patientType">
+                            <el-option v-for="(item, index) in PATIENT_TYPE" :key="index" :label="item.label"
+                                :value="item.value" />
+                        </el-select>
+                    </el-form-item>
+                </el-col>
             </el-row>
             <el-row>
                 <el-col :span="24">
-                    <el-form-item label="MPDS症状" prop="mpdsList" :rules="[{ required: true, message: '请选择MPDS症状', trigger: 'blur' }]">
-                        <el-checkbox-group v-model="form.mpdsList" :validate-event="false" :disabled="isReadonly" @change="handleCheckBox(form.mpdsList, 'mpds')">
-                            <el-checkbox v-for="(item, index) in MPDS_0001" :key="index" :label="item.value" :validate-event="false">
+                    <el-form-item label="MPDS症状" prop="mpdsList"
+                        :rules="[{ required: true, message: '请选择MPDS症状', trigger: 'blur' }]">
+                        <el-checkbox-group v-model="form.mpdsList" :validate-event="false" :disabled="isReadonly"
+                            @change="handleCheckBox(form.mpdsList, 'mpds')">
+                            <el-checkbox v-for="(item, index) in MPDS_0001" :key="index" :label="item.value"
+                                :validate-event="false">
                                 {{ item.label }}
                             </el-checkbox>
                         </el-checkbox-group>
@@ -62,20 +80,24 @@
             <el-row :gutter="50">
                 <el-col :span="10" v-if="form.mpdsList.includes('08')">
                     <el-form-item label="创伤(其他创伤)明细">
-                        <el-input v-model="form.traumaDetail" placeholder="请输入创伤(其他创伤)明细" type="textarea" autosize :readonly="isReadonly" :maxlength="100" />
+                        <el-input v-model="form.traumaDetail" placeholder="请输入创伤(其他创伤)明细" type="textarea" autosize
+                            :readonly="isReadonly" :maxlength="100" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
                     <el-form-item label="其他非创伤症状明细" v-if="form.mpdsList.includes('11')">
-                        <el-input v-model="form.traumaOther" placeholder="请输入其他非创伤症状明细" type="textarea" autosize :readonly="isReadonly" :maxlength="100" />
+                        <el-input v-model="form.traumaOther" placeholder="请输入其他非创伤症状明细" type="textarea" autosize
+                            :readonly="isReadonly" :maxlength="100" />
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="接诊科室" prop="receiveDept" :rules="[{ required: true, message: '请选择接诊科室', trigger: 'blur' }]">
+                    <el-form-item label="接诊科室" prop="receiveDept"
+                        :rules="[{ required: true, message: '请选择接诊科室', trigger: 'blur' }]">
                         <el-radio-group v-model="form.receiveDept" :disabled="isReadonly">
-                            <el-radio v-for="(item, index) in DEPT_0001" :key="index" :label="item.value" @click.native.prevent="clickRadio(item.value, 'receiveDept')">
+                            <el-radio v-for="(item, index) in DEPT_0001" :key="index" :label="item.value"
+                                @click.native.prevent="clickRadio(item.value, 'receiveDept')">
                                 {{ item.label }}
                             </el-radio>
                         </el-radio-group>
@@ -96,12 +118,14 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="6" v-if="form.receiveDept">
-                    <el-form-item label="到达急诊时间" v-if="form.receiveDept === '01'" prop="arriveEdTime" :rules="[{ required: true, message: '请填到达急诊时间', trigger: 'blur' }]">
+                    <el-form-item label="到达急诊时间" v-if="form.receiveDept === '01'" prop="arriveEdTime"
+                        :rules="[{ required: true, message: '请填到达急诊时间', trigger: 'blur' }]">
                         <el-col :span="18">
                             <med-datetime v-model="form.arriveEdTime" :disabled="isReadonly" v-clear />
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="到达门诊时间" v-if="form.receiveDept === '02'" prop="arriveOsTime" :rules="[{ required: true, message: '请填写到达门诊时间', trigger: 'blur' }]">
+                    <el-form-item label="到达门诊时间" v-if="form.receiveDept === '02'" prop="arriveOsTime"
+                        :rules="[{ required: true, message: '请填写到达门诊时间', trigger: 'blur' }]">
                         <el-col :span="18">
                             <med-datetime v-model="form.arriveOsTime" :disabled="isReadonly" v-clear />
                         </el-col>
@@ -110,23 +134,29 @@
             </el-row>
             <el-row>
                 <el-col :span="6" v-if="form.receiveDept">
-                    <el-form-item label="到达急诊时是否已经死亡" v-if="form.receiveDept === '01'" prop="arriveEdIsDead" :rules="[{ required: true, message: '请填写到达急诊时是否已经死亡', trigger: 'blur' }]">
+                    <el-form-item label="到达急诊时是否已经死亡" v-if="form.receiveDept === '01'" prop="arriveEdIsDead"
+                        :rules="[{ required: true, message: '请填写到达急诊时是否已经死亡', trigger: 'blur' }]">
                         <el-radio-group v-model="form.arriveEdIsDead" :disabled="isReadonly || phfaDeath">
-                            <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value" @click.native.prevent="phfaDeath ? '' : clickRadio(item.value, 'arriveEdIsDead')">
+                            <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value"
+                                @click.native.prevent="phfaDeath ? '' : clickRadio(item.value, 'arriveEdIsDead')">
                                 {{ item.label }}
                             </el-radio-button>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="到达门诊时是否已经死亡" v-if="form.receiveDept === '02'" prop="arriveOsIsDead" :rules="[{ required: true, message: '请填写到达门诊时是否已经死亡', trigger: 'blur' }]">
+                    <el-form-item label="到达门诊时是否已经死亡" v-if="form.receiveDept === '02'" prop="arriveOsIsDead"
+                        :rules="[{ required: true, message: '请填写到达门诊时是否已经死亡', trigger: 'blur' }]">
                         <el-radio-group v-model="form.arriveOsIsDead" :disabled="isReadonly || phfaDeath">
-                            <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value" @click.native.prevent="phfaDeath ? '' : clickRadio(item.value, 'arriveOsIsDead')">
+                            <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value"
+                                @click.native.prevent="phfaDeath ? '' : clickRadio(item.value, 'arriveOsIsDead')">
                                 {{ item.label }}
                             </el-radio-button>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6" v-if="(form.receiveDept === '01' && form.arriveEdIsDead === '1') || (form.receiveDept === '02' && form.arriveOsIsDead === '1')">
-                    <el-form-item label="死亡时间" prop="deadTime" :rules="[{ required: true, message: '请选择死亡时间', trigger: 'blur' }]">
+                <el-col :span="6"
+                    v-if="(form.receiveDept === '01' && form.arriveEdIsDead === '1') || (form.receiveDept === '02' && form.arriveOsIsDead === '1')">
+                    <el-form-item label="死亡时间" prop="deadTime"
+                        :rules="[{ required: true, message: '请选择死亡时间', trigger: 'blur' }]">
                         <el-col :span="18">
                             <med-datetime v-model="form.deadTime" :disabled="isReadonly" v-clear />
                         </el-col>
@@ -144,7 +174,8 @@
                 <el-col :span="6">
                     <el-form-item label="是否到达抢救室">
                         <el-radio-group v-model="form.isArriveEr" :disabled="isReadonly">
-                            <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value" @click.native.prevent="clickRadio(item.value, 'isArriveEr')">
+                            <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value"
+                                @click.native.prevent="clickRadio(item.value, 'isArriveEr')">
                                 {{ item.label }}
                             </el-radio-button>
                         </el-radio-group>
@@ -170,34 +201,42 @@
                 <med-subtitle>院内体征</med-subtitle>
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="体温" prop="sign.temperature" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                        <el-form-item label="体温" prop="sign.temperature"
+                            :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
                             <el-col :span="18">
-                                <el-input v-model="form.sign.temperature" :readonly="isReadonly" oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')}">
+                                <el-input v-model="form.sign.temperature" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')}">
                                     <template slot="append">℃</template>
                                 </el-input>
                             </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="心率" prop="sign.heartRate" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                        <el-form-item label="心率" prop="sign.heartRate"
+                            :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
                             <el-col :span="18">
-                                <el-input v-model="form.sign.heartRate" :readonly="isReadonly" oninput="if(value){value=value.replace(/[^\d]/g,'')}">
+                                <el-input v-model="form.sign.heartRate" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/[^\d]/g,'')}">
                                     <template slot="append">次/分</template>
                                 </el-input>
                             </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="脉搏" prop="sign.plus" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                        <el-form-item label="脉搏" prop="sign.plus"
+                            :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
                             <el-col :span="18">
-                                <el-input v-model="form.sign.plus" :readonly="isReadonly" oninput="if(value){value=value.replace(/[^\d]/g,'')}">
+                                <el-input v-model="form.sign.plus" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/[^\d]/g,'')}">
                                     <template slot="append">次/分</template>
                                 </el-input>
                             </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="呼吸" prop="sign.breath" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]" oninput="if(value){value=value.replace(/[^\d]/g,'')}">
+                        <el-form-item label="呼吸" prop="sign.breath"
+                            :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]"
+                            oninput="if(value){value=value.replace(/[^\d]/g,'')}">
                             <el-col :span="18">
                                 <el-input v-model="form.sign.breath" :readonly="isReadonly">
                                     <template slot="append">次/分</template>
@@ -210,13 +249,19 @@
                     <el-col :span="6">
                         <el-form-item label="血压">
                             <el-col :span="18" style="display: flex;">
-                                <el-form-item prop="sign.sbp" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
-                                    <el-input v-model="form.sign.sbp" :readonly="isReadonly" oninput="if(value){value=value.replace(/[^\d]/g,'')} if(value<0){value=''} " class="sbp">
+                                <el-form-item prop="sign.sbp"
+                                    :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                                    <el-input v-model="form.sign.sbp" :readonly="isReadonly"
+                                        oninput="if(value){value=value.replace(/[^\d]/g,'')} if(value<0){value=''} "
+                                        class="sbp">
                                         <i slot="suffix">/</i>
                                     </el-input>
                                 </el-form-item>
-                                <el-form-item prop="sign.dbp" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
-                                    <el-input v-model="form.sign.dbp" :readonly="isReadonly" oninput="if(value){value=value.replace(/[^\d]/g,'')} if(value<0){value=''} " class="dbp">
+                                <el-form-item prop="sign.dbp"
+                                    :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                                    <el-input v-model="form.sign.dbp" :readonly="isReadonly"
+                                        oninput="if(value){value=value.replace(/[^\d]/g,'')} if(value<0){value=''} "
+                                        class="dbp">
                                         <i slot="append">mmHg</i>
                                     </el-input>
                                 </el-form-item>
@@ -224,18 +269,22 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="血氧" prop="sign.spo" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                        <el-form-item label="血氧" prop="sign.spo"
+                            :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
                             <el-col :span="18">
-                                <el-input v-model="form.sign.spo" :readonly="isReadonly" oninput="if(value){value=value.replace(/[^\d]/g,'')}">
+                                <el-input v-model="form.sign.spo" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/[^\d]/g,'')}">
                                     <template slot="append">%</template>
                                 </el-input>
                             </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="血糖" prop="sign.bloodglucose" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                        <el-form-item label="血糖" prop="sign.bloodglucose"
+                            :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
                             <el-col :span="18">
-                                <el-input v-model="form.sign.bloodglucose" :readonly="isReadonly" oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')}">
+                                <el-input v-model="form.sign.bloodglucose" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')}">
                                     <template slot="append">mmol/L</template>
                                 </el-input>
                             </el-col>
@@ -245,9 +294,11 @@
                 <med-subtitle>院内预警联动</med-subtitle>
                 <el-row>
                     <el-col :span="6">
-                        <el-form-item label="是否呼叫了创伤救治团队" prop="isCall" :rules="[{ required: true, message: '请选择是否呼叫了创伤救治团队', trigger: 'blur' }]">
+                        <el-form-item label="是否呼叫了创伤救治团队" prop="isCall"
+                            :rules="[{ required: true, message: '请选择是否呼叫了创伤救治团队', trigger: 'blur' }]">
                             <el-radio-group v-model="form.isCall" :disabled="isReadonly">
-                                <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value" @click.native.prevent="clickRadio(item.value, 'isCall')">
+                                <el-radio-button v-for="(item, index) in WHETHER" :key="index" :label="item.value"
+                                    @click.native.prevent="clickRadio(item.value, 'isCall')">
                                     {{ item.label }}
                                 </el-radio-button>
                             </el-radio-group>
@@ -255,7 +306,8 @@
                     </el-col>
                     <div v-if="form.isCall === '1'">
                         <el-col :span="6">
-                            <el-form-item label="创伤救治团队到达急诊科时间" prop="treatmentArriveTime" :rules="[{ required: true, message: '请选择创伤救治团队到达急诊科时间', trigger: 'blur' }]">
+                            <el-form-item label="创伤救治团队到达急诊科时间" prop="treatmentArriveTime"
+                                :rules="[{ required: true, message: '请选择创伤救治团队到达急诊科时间', trigger: 'blur' }]">
                                 <el-col :span="18">
                                     <med-datetime v-model="form.treatmentArriveTime" :disabled="isReadonly" v-clear />
                                 </el-col>

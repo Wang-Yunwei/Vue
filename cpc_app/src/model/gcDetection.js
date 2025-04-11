@@ -1,0 +1,43 @@
+export default function GcDetection() {
+  return {
+    registId: '',
+    bloodCollectionTime: '',
+    diag: '',
+    dispose: '',
+    ecgDiagnosis: '',
+    ecgException: '',
+    ecgFile: '',
+    ecgTime: '',
+    firstNihssId: '',
+    gcsFirstScore: null,
+    gcsFirstTime: '',
+    id: '',
+    isEcg: '',
+    isGcsFirst: '',
+    isLvo: '',
+    isNihssFirst: '',
+    nihssFirstScore: null,
+    nihssFirstTime: '',
+    isSkullCt: '',
+    skullCtTime: '',
+    // 首次gcs评分id
+    firstGcsId: '',
+    isCt: '0',
+    isCtAspects: '',
+    // ct-aspects评分后循环id
+    ctAspectsAfterId: '',
+    // ct-aspects评分前循环id
+    ctAspectsBeforeId: '',
+    ctAspectsTime: '',
+    ctEnterTime: '',
+    ctLeaveTime: '',
+    isMriAspects: '',
+    // mri-aspects评分后循环id
+    mriAspectsAfterId: '',
+    // mri-aspects评分前循环id
+    mriAspectsBeforeId: '',
+    mriAspectsTime: '',
+    mriStartTime: '',
+    mriFinishTime: ''
+  }
+}

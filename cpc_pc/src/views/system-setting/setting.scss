@@ -1,0 +1,15 @@
+.med-setting-card {
+    &-title {
+        display: inline-block;
+        width: 130px;
+    }
+    &-row {
+      display: flex;
+      align-items: center;
+      height: 38px;
+    }
+    &-name {
+      display: inline-block;
+      width: 120px;
+    }
+  }

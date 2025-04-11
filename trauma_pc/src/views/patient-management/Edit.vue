@@ -8,7 +8,8 @@
                 <el-timeline-item v-for="(item, index) in timeAxis" :key="index" type="info">
                     <div style="color: #435372">{{ item.name }}</div>
                     <div v-if="item.timeDifferenceVO" class="time-diff">
-                        <el-row class="time-diff-item" :gutter="12" :style="item.timeDifferenceVO.value < 1 ? 'color: #f86359; background-color: rgb(254,240,240)' : ''">
+                        <el-row class="time-diff-item" :gutter="12"
+                            :style="item.timeDifferenceVO.value < 1 ? 'color: #f86359; background-color: rgb(254,240,240)' : ''">
                             <el-col :span="17">
                                 {{ item.timeDifferenceVO.name }}
                             </el-col>
@@ -27,48 +28,68 @@
         </el-aside>
         <el-container>
             <el-header style="background-color: white;height: auto;padding: 18px 18px 0 18px;">
-                <el-form ref="form" :model="form" size="mini" label-width="auto" label-position="left" v-if="!isShowRead">
+                <el-form ref="form" :model="form" size="mini" label-width="auto" label-position="left"
+                    v-if="!isShowRead">
                     <el-row :gutter="20">
                         <el-col :span="4">
-                            <el-form-item label="姓名" prop="patientRegist.name" :rules="[{ required: true, message: '请输入患者姓名', trigger: 'blur' }]">
+                            <el-form-item label="姓名" prop="patientRegist.name"
+                                :rules="[{ required: true, message: '请输入患者姓名', trigger: 'blur' }]">
                                 <div class="flex-c-b">
-                                    <el-input v-model="form.patientRegist.name" placeholder="姓名" :validate-event="false" :readonly="isReadonly" :maxlength="20" />
-                                    <el-checkbox v-model="form.patientRegist.hasName" true-label="1" false-label="0" :disabled="isHasName" style="margin-left: 10px;" @change="genPatientName">无名氏</el-checkbox>
+                                    <el-input v-model="form.patientRegist.name" placeholder="姓名" :validate-event="false"
+                                        :readonly="isReadonly" :maxlength="20" />
+                                    <el-checkbox v-model="form.patientRegist.hasName" true-label="1" false-label="0"
+                                        :disabled="isHasName" style="margin-left: 10px;"
+                                        @change="genPatientName">无名氏</el-checkbox>
                                 </div>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="性别" prop="patientRegist.gender" :rules="[{ required: true, message: '请选择性别' }]">
+                            <el-form-item label="性别" prop="patientRegist.gender"
+                                :rules="[{ required: true, message: '请选择性别' }]">
                                 <el-radio-group v-model="form.patientRegist.gender">
-                                    <el-radio-button v-for="(item, index) in GENDER_0001" :key="index" :label="item.value" :disabled="isReadonly">
+                                    <el-radio-button v-for="(item, index) in GENDER_0001" :key="index"
+                                        :label="item.value" :disabled="isReadonly">
                                         {{ item.label }}
                                     </el-radio-button>
                                 </el-radio-group>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="身份证号" prop="patientRegist.idNumber" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
-                                <el-input v-model="form.patientRegist.idNumber" placeholder="身份证号" :readonly="isReadonly" :maxlength="18" />
+                            <el-form-item label="身份证号" prop="patientRegist.idNumber"
+                                :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                                <el-input v-model="form.patientRegist.idNumber" placeholder="身份证号"
+                                    :readonly="isReadonly" :maxlength="18" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="年龄区间" prop="patientRegist.ageRange" :rules="[{ required: true, message: '请选择年龄区间' }]">
-                                <el-select v-model="form.patientRegist.ageRange" placeholder="年龄区间" :disabled="isReadonly">
-                                    <el-option v-for="(item, index) in AGE_0001" :key="index" :label="item.label" :value="item.value" />
+                            <el-form-item label="年龄区间" prop="patientRegist.ageRange"
+                                :rules="[{ required: true, message: '请选择年龄区间' }]">
+                                <el-select v-model="form.patientRegist.ageRange" placeholder="年龄区间"
+                                    :disabled="isReadonly">
+                                    <el-option v-for="(item, index) in AGE_0001" :key="index" :label="item.label"
+                                        :value="item.value" />
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="form.patientRegist.ageRange === '02' ? 6 : 4" v-if="form.patientRegist.ageRange">
                             <div style="display: flex;">
-                                <el-form-item label="年龄" prop="patientRegist.age" :rules="[{ required: true, validator: valideateAge, trigger: 'blur' }]">
-                                    <el-input v-model.number="form.patientRegist.age" :placeholder="form.patientRegist.ageRange === '02' ? '请填写' : '请填写年龄'" oninput="if(value){value=value.replace(/[^\d]/g,'')}" :readonly="isReadonly" :maxlength="3">
+                                <el-form-item label="年龄" prop="patientRegist.age"
+                                    :rules="[{ required: true, validator: valideateAge, trigger: 'blur' }]">
+                                    <el-input v-model.number="form.patientRegist.age"
+                                        :placeholder="form.patientRegist.ageRange === '02' ? '请填写' : '请填写年龄'"
+                                        oninput="if(value){value=value.replace(/[^\d]/g,'')}" :readonly="isReadonly"
+                                        :maxlength="3">
                                         <template slot="append">
                                             {{ form.patientRegist.ageRange === '03' ? '天' : '岁' }}
                                         </template>
                                     </el-input>
                                 </el-form-item>
-                                <el-form-item prop="patientRegist.ageMonth" :rules="[{ type: 'number', min: 0, max: 12, message: '请输入0-12之间的整数', trigger: 'blur' }]" v-if="form.patientRegist.ageRange === '02'">
-                                    <el-input v-model.number="form.patientRegist.ageMonth" placeholder="请填写" oninput="if(value){value=value.replace(/[^\d]/g,'')}" :readonly="isReadonly" :maxlength="2">
+                                <el-form-item prop="patientRegist.ageMonth"
+                                    :rules="[{ type: 'number', min: 0, max: 12, message: '请输入0-12之间的整数', trigger: 'blur' }]"
+                                    v-if="form.patientRegist.ageRange === '02'">
+                                    <el-input v-model.number="form.patientRegist.ageMonth" placeholder="请填写"
+                                        oninput="if(value){value=value.replace(/[^\d]/g,'')}" :readonly="isReadonly"
+                                        :maxlength="2">
                                         <template slot="append">月</template>
                                     </el-input>
                                 </el-form-item>
@@ -77,9 +98,12 @@
                     </el-row>
                     <el-row :gutter="20">
                         <el-col :span="4">
-                            <el-form-item label="来院方式" prop="patientMain.visitType" :rules="[{ required: true, message: '请选择来院方式', trigger: 'change' }]">
-                                <el-select v-model="form.patientMain.visitType" placeholder="来院方式" :disabled="isReadonly" @change="activeTab = ''">
-                                    <el-option v-for="(item, index) in VISIT_0001" :key="index" :label="item.label" :value="item.value" />
+                            <el-form-item label="来院方式" prop="patientMain.visitType"
+                                :rules="[{ required: true, message: '请选择来院方式', trigger: 'change' }]">
+                                <el-select v-model="form.patientMain.visitType" placeholder="来院方式"
+                                    :disabled="isReadonly" @change="activeTab = ''">
+                                    <el-option v-for="(item, index) in VISIT_0001" :key="index" :label="item.label"
+                                        :value="item.value" />
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -90,48 +114,60 @@
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="卡类型">
-                                <el-select v-model="form.patientRegist.idcardType" placeholder="卡类型" :disabled="isReadonly" @change="$set(form.patientRegist, 'identificationNo', '')">
-                                    <el-option v-for="(item, index) in CARD_0001" :key="index" :label="item.label" :value="item.value" />
+                                <el-select v-model="form.patientRegist.idcardType" placeholder="卡类型"
+                                    :disabled="isReadonly" @change="$set(form.patientRegist, 'identificationNo', '')">
+                                    <el-option v-for="(item, index) in CARD_0001" :key="index" :label="item.label"
+                                        :value="item.value" />
                                 </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="卡号">
-                                <el-input v-model="form.patientRegist.identificationNo" placeholder="卡号" :maxlength="20" :readonly="isReadonly || form.patientRegist.idcardType === '1'" />
+                                <el-input v-model="form.patientRegist.identificationNo" placeholder="卡号" :maxlength="20"
+                                    :readonly="isReadonly || form.patientRegist.idcardType === '1'" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="紧急联系人">
-                                <el-input v-model="form.patientRegist.emergencyContact" placeholder="紧急联系人" :readonly="isReadonly" :maxlength="20" />
+                                <el-input v-model="form.patientRegist.emergencyContact" placeholder="紧急联系人"
+                                    :readonly="isReadonly" :maxlength="20" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="联系电话" prop="patientRegist.phoneNumber" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
-                                <el-input v-model="form.patientRegist.phoneNumber" placeholder="联系电话" :readonly="isReadonly" :maxlength="11" />
+                            <el-form-item label="联系电话" prop="patientRegist.phoneNumber"
+                                :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                                <el-input v-model="form.patientRegist.phoneNumber" placeholder="联系电话"
+                                    :readonly="isReadonly" :maxlength="11" />
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20">
                         <el-col :span="4">
                             <el-form-item label="家庭住址">
-                                <el-input v-model="form.patientRegist.homeAddress" placeholder="家庭住址" :readonly="isReadonly" :maxlength="100" />
+                                <el-input v-model="form.patientRegist.homeAddress" placeholder="家庭住址"
+                                    :readonly="isReadonly" :maxlength="100" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item label="详细住址">
-                                <el-input v-model="form.patientRegist.detailAddress" placeholder="详细住址" :readonly="isReadonly" :maxlength="100" />
+                                <el-input v-model="form.patientRegist.detailAddress" placeholder="详细住址"
+                                    :readonly="isReadonly" :maxlength="100" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="身高" prop="patientRegist.height" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
-                                <el-input v-model="form.patientRegist.height" placeholder="身高" :readonly="isReadonly" oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')}">
+                            <el-form-item label="身高" prop="patientRegist.height"
+                                :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                                <el-input v-model="form.patientRegist.height" placeholder="身高" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')}">
                                     <template slot="append">cm</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item label="体重" prop="patientRegist.weight" :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
-                                <el-input v-model="form.patientRegist.weight" placeholder="体重" :readonly="isReadonly" oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')}">
+                            <el-form-item label="体重" prop="patientRegist.weight"
+                                :rules="[{ validator: validateVitalSigns, trigger: 'blur' }]">
+                                <el-input v-model="form.patientRegist.weight" placeholder="体重" :readonly="isReadonly"
+                                    oninput="if(value){value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')}">
                                     <template slot="append">kg</template>
                                 </el-input>
                             </el-form-item>
@@ -139,7 +175,8 @@
                         <el-col :span="4">
                             <el-form-item label="院区">
                                 <el-select v-model="form.patientMain.hospitalArea" placeholder="院区" disabled>
-                                    <el-option v-for="(item, index) in hospitalAreaList" :key="index" :label="item.label" :value="item.value" />
+                                    <el-option v-for="(item, index) in hospitalAreaList" :key="index"
+                                        :label="item.label" :value="item.value" />
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -152,12 +189,12 @@
                         </el-col>
                         <el-col :span="4">
                             <span>性别: {{
-                    dicLabelByValue(form.patientRegist.gender,
-                        'GENDER_0001') }}</span>
+                                dicLabelByValue(form.patientRegist.gender,
+                                'GENDER_0001') }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>身份证号: {{ form.patientRegist.idNumber
-                                }}</span>
+                            }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>年龄区间:
@@ -167,51 +204,51 @@
                         <el-col :span="4">
                             <span>年龄:
                                 {{ form.patientRegist.ageRange === '03' ? form.patientRegist.age + ' 天' :
-                    form.patientRegist.ageRange === '02' ? form.patientRegist.age + ' 岁' +
-                        form.patientRegist.ageMonth + ' 月' : form.patientRegist.age + ' 岁'
+                                    form.patientRegist.ageRange === '02' ? form.patientRegist.age + ' 岁' +
+                                        form.patientRegist.ageMonth + ' 月' : form.patientRegist.age + ' 岁'
                                 }}
                             </span>
                         </el-col>
                         <el-col :span="4">
                             <span>腕带号: {{ form.patientRegist.rfTagId
-                                }}</span>
+                            }}</span>
                         </el-col>
                     </el-row>
                     <br>
                     <el-row :gutter="20">
                         <el-col :span="4">
                             <span>来院方式: {{
-                    dicLabelByValue(form.patientMain.visitType,
-                        'VISIT_0001') }}</span>
+                                dicLabelByValue(form.patientMain.visitType,
+                                'VISIT_0001') }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>卡类型: {{
-                    dicLabelByValue(form.patientRegist.idcardType,
-                        'CARD_0001') }}</span>
+                                dicLabelByValue(form.patientRegist.idcardType,
+                                'CARD_0001') }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>卡号: {{ form.patientRegist.identificationNo
-                                }}</span>
+                            }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>紧急联系人: {{
-                    form.patientRegist.emergencyContact
-                }}</span>
+                                form.patientRegist.emergencyContact
+                                }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>联系电话: {{ form.patientRegist.phoneNumber
-                                }}</span>
+                            }}</span>
                         </el-col>
                     </el-row>
                     <br>
                     <el-row :gutter="20">
                         <el-col :span="4">
                             <span>家庭住址: {{ form.patientRegist.homeAddress
-                                }}</span>
+                            }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>详细住址: {{ form.patientRegist.detailAddress
-                                }}</span>
+                            }}</span>
                         </el-col>
                         <el-col :span="4">
                             <span>身高: {{ form.patientRegist.height }} cm</span>
@@ -221,8 +258,8 @@
                         </el-col>
                         <el-col :span="4">
                             <span>院区:
-                                {{ form.patientMain.hospitalArea ? hospitalAreaList.find(el => el.value ===
-                    form.patientMain.hospitalArea).label : '' }}
+                                {{form.patientMain.hospitalArea ? hospitalAreaList.find(el => el.value ===
+                                    form.patientMain.hospitalArea).label : '' }}
                             </span>
                         </el-col>
                     </el-row>
@@ -231,7 +268,7 @@
             <el-main style="position: relative;padding: initial;overflow: hidden;">
                 <el-tabs v-model="activeName" style="height: 100%;">
                     <el-tab-pane :label="item.label" :name="item.value" v-for="item in tabs" :key="item.value">
-                        <component :is=" item.value" ref="tabs" />
+                        <component :is="item.value" ref="tabs" />
                     </el-tab-pane>
                 </el-tabs>
                 <div class="empty" v-if="tabs.length < 1">
@@ -239,28 +276,35 @@
                 </div>
                 <div style="position: absolute;top: 1rem;right: 1px;">
                     <div v-if="!isShowRead && !['2', '3', '4'].includes(form.patientMain.status)">
-                        <el-button size="mini" type="success" style="background-color: rgb(19,206,102);" @click="isShowBindWristStrap = true">{{
-                    form.patientRegist.rfTagName ?
-                        '腕带:' + form.patientRegist.rfTagName : '绑定腕带'
-                }}</el-button>
-                        <el-button size="mini" type="success" style="background-color: rgb(19,206,102);" @click="synchrodata" v-if="this.form.patientMain.emId">
+                        <el-button size="mini" type="success" style="background-color: rgb(19,206,102);"
+                            @click="isShowBindWristStrap = true">{{
+                                form.patientRegist.rfTagName ?
+                                    '腕带:' + form.patientRegist.rfTagName : '绑定腕带'
+                            }}</el-button>
+                        <el-button size="mini" type="success" style="background-color: rgb(19,206,102);"
+                            @click="synchrodata" v-if="this.form.patientMain.emId">
                             同步
                         </el-button>
-                        <el-button size="mini" type="success" style="background-color: rgb(19,206,102);" @click="clickRead" v-if="form.patientMain.emId">调阅</el-button>
-                        <el-button v-else size="mini" type="success" style="background-color: rgb(19,206,102);" @click="isShowBindPatient = true">绑定患者</el-button>
+                        <el-button size="mini" type="success" style="background-color: rgb(19,206,102);"
+                            @click="clickRead" v-if="form.patientMain.emId">调阅</el-button>
+                        <el-button v-else size="mini" type="success" style="background-color: rgb(19,206,102);"
+                            @click="isShowBindPatient = true">绑定患者</el-button>
                     </div>
                 </div>
                 <div v-if="!isShowRead" style="position: absolute;bottom: 1rem;right: 2rem;">
                     <el-button v-if="AUTH_ADD && form.patientMain.status === '1'" @click="saveOrSubmit(0)">
                         保存
                     </el-button>
-                    <el-button @click="disallowVisible = true" v-if="(form.patientMain.status === '2' && AUTH_AUDIT_OVERRULE) || (form.patientMain.status === '3' && AUTH_ARCHIVE_OVERRULE)">
+                    <el-button @click="disallowVisible = true"
+                        v-if="(form.patientMain.status === '2' && AUTH_AUDIT_OVERRULE) || (form.patientMain.status === '3' && AUTH_ARCHIVE_OVERRULE)">
                         驳回
                     </el-button>
-                    <el-button type="primary" @click="saveOrSubmit(form.patientMain.status)" v-if="(form.patientMain.status === '1' && AUTH_SUBMIT) || (form.patientMain.status === '2' && AUTH_AUDIT) || (form.patientMain.status === '3' && AUTH_ARCHIVE) || (form.patientMain.status === '4' && AUTH_REPORT)">
-                        {{ states.find(el => el.value === form.patientMain.status).label }}
+                    <el-button type="primary" @click="saveOrSubmit(form.patientMain.status)"
+                        v-if="(form.patientMain.status === '1' && AUTH_SUBMIT) || (form.patientMain.status === '2' && AUTH_AUDIT) || (form.patientMain.status === '3' && AUTH_ARCHIVE) || (form.patientMain.status === '4' && AUTH_REPORT)">
+                        {{states.find(el => el.value === form.patientMain.status).label}}
                     </el-button>
-                    <el-dialog title="校验错误" :visible.sync="validateVisible" width="40%" :close-on-click-modal="false" :before-close="() => { validateTable = []; validateVisible = false }">
+                    <el-dialog title="校验错误" :visible.sync="validateVisible" width="40%" :close-on-click-modal="false"
+                        :before-close="() => { validateTable = []; validateVisible = false }">
                         <el-table :data="validateTable" height="500" border>
                             <el-table-column prop="model" label="模块" width="180">
                             </el-table-column>
@@ -270,8 +314,10 @@
                             </el-table-column>
                         </el-table>
                     </el-dialog>
-                    <el-dialog title="审核驳回" :visible.sync="disallowVisible" width="30%" :close-on-click-modal="false" :before-close="() => disallowVisible = false">
-                        <el-input v-model="disallow" type="textarea" placeholder="请输入驳回原因" :autosize="{ minRows: 2, maxRows: 4 }" />
+                    <el-dialog title="审核驳回" :visible.sync="disallowVisible" width="30%" :close-on-click-modal="false"
+                        :before-close="() => disallowVisible = false">
+                        <el-input v-model="disallow" type="textarea" placeholder="请输入驳回原因"
+                            :autosize="{ minRows: 2, maxRows: 4 }" />
                         <span slot="footer">
                             <el-button @click="disallow = ''; disallowVisible = false">取 消</el-button>
                             <el-button type="primary" @click="clickDisallow">确 定</el-button>

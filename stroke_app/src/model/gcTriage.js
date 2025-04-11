@@ -1,0 +1,31 @@
+export default function GcTriage() {
+  return {
+    id: '',
+    registId: '',
+    outPatientId: '',
+    rfTagId: '',
+    registrationTime: '',
+    arriveHospitalTime: '',
+    triageTime: '',
+    triageVisitTime: '',
+    onsetTime: '',
+    isAfterWakeup: '',
+    lastHealthyTime: '',
+    awareTime: '',
+    strokeVisitTime: '',
+    strokeDoctor: '',
+    isFasted: '',
+    fastedId: '',
+    illnessLevel: '',
+    isMrs: '',
+    mrsId: '',
+    bloodGlucose: undefined,
+    bloodGlucoseTime: '',
+    bodyWeight: undefined,
+    isOpenvein: '',
+    openveinTime: '',
+    strokeNotifyTime: '',
+    rrEnterTime: '',
+    rrLeaveTime: ''
+  }
+}

@@ -1,0 +1,37 @@
+// 治疗
+export default function GcCure() {
+  return {
+    registId: '',
+    crEnterTime: '',
+    crLeaveTime: '',
+    crActiveTime: '',
+    pciAdmissionTime: '',
+    pciAdmissionDoctor: '',
+    pciTaboo: '',
+    pciTalkStartTime: '',
+    isPciInformed: '',
+    isPciInformedArgee: '',
+    pciInformedSignTime: '',
+    pciTalkEndTime: '',
+    isPci: '',
+    pciRefuseReason: '',
+    pciNihssBeforeId: '',
+    pciAdaptation: '',
+    femoralArteryStartTime: '',
+    femoralArteryFinishTime: '',
+    bloodVesselsTime: '',
+    bloodVesselsTiciLevel: '',
+    pciReFinishTime: '',
+    pciStrategy: '',
+    thrombectomyStartTime: '',
+    pciFroTiciLevel: '',
+    pciFroTime: '',
+    pciLroTiciLevel: '',
+    pciLroTime: '',
+    pciNihssAfterId: '',
+    isPciAde: '',
+    pciAdeTime: '',
+    pciAdeType: '',
+    pciAdeOther: ''
+  }
+}

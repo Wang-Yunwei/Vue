@@ -1,0 +1,503 @@
+<template>
+  <med-view-container @return="jumpToDetails" title="急救病历">
+    <template #bottom-part>
+      <van-button
+        class="save-btn"
+        block
+        round
+        type="info"
+        icon-position="center"
+        size="normal"
+        @click.stop="handleBind"
+      >
+        &nbsp;&nbsp; 建档 &nbsp;&nbsp;
+      </van-button>
+    </template>
+    <div class="med-view-wrapper scroll-view">
+      <van-collapse v-model="exhibit" @change="collapseChange">
+        <van-collapse-item title="基本信息" name="exhibit1">
+          <div class="center">
+            <p>
+              <span>姓名</span>
+              <span>{{ firstAid.patientBaseInfoDto.name }}</span>
+            </p>
+            <p>
+              <span>性别</span
+              ><span>{{
+                firstAid.patientBaseInfoDto.gender
+              }}</span>
+            </p>
+            <p>
+              <span>年龄</span
+              ><span>{{ firstAid.patientBaseInfoDto.age }}</span>
+            </p>
+            <p>
+              <span>民族</span
+              ><span>
+                {{
+                  firstAid.patientBaseInfoDto.nation
+                }}族</span>
+            </p>
+            <p>
+              <span>联系电话</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.contactNumber }}</span>
+            </p>
+          </div>
+        </van-collapse-item>
+        <van-collapse-item title="任务信息" name="exhibit2">
+          <div class="center">
+            <p>
+              <span>车牌号</span>
+              <span>{{ firstAid?.taskInfoDto?.licensePlate }}</span>
+            </p>
+            <p>
+              <span>呼叫原因</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.reasonType }}</span>
+            </p>
+            <p>
+              <span>疾病类别</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.diseaseCategory }}</span>
+            </p>
+            <p>
+              <span>接诊地址</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.address }}</span>
+            </p>
+            <p>
+              <span>出车分站</span>
+              <span>{{ firstAid?.taskInfoDto?.dispatchVehicleSiteName }}</span>
+            </p>
+            <p>
+              <span>出诊医生</span
+              ><span>{{ firstAid?.taskInfoDto?.doctorName }}</span>
+            </p>
+            <p>
+              <span>出诊护士</span
+              ><span>{{ firstAid?.taskInfoDto?.nurseName }}</span>
+            </p>
+          </div>
+        </van-collapse-item>
+        <van-collapse-item title="患者病史" name="exhibit3">
+          <div class="center">
+            <p>
+              <span>发病时间</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.morbtimearea }}</span>
+            </p>
+            <p>
+              <span>主诉</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.chiefComplaint }}</span>
+            </p>
+            <p>
+              <span>现病史</span
+              ><span>{{ firstAid?.medicalRecordInfoDto?.presentIllness }}</span>
+            </p>
+            <p>
+              <span>过敏史</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.allergicHistory }}</span>
+            </p>
+            <p>
+              <span>既往史</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.pastHistory }}</span>
+            </p>
+          </div>
+        </van-collapse-item>
+        <van-collapse-item title="体格检查" name="exhibit4">
+          <div class="center">
+            <van-cell
+              class="card-item"
+              v-for="item in firstAid.physicalExaminationDtoList"
+              :key="item.id"
+            >
+              <p>
+                <span>检查时间</span>
+                <span>{{ formatDate(item.createTime) }}</span>
+              </p>
+              <p>
+                <span>体温（℃）</span>
+                <span>{{ item.t }}</span>
+              </p>
+              <p>
+                <span>呼吸（次/分）</span>
+                <span>{{ item.rr }}</span>
+              </p>
+              <p>
+                <span>脉搏（次/分）</span>
+                <span>{{ item.pulse }}</span>
+              </p>
+              <p>
+                <span>血压（mmHg）</span>
+                <span>{{ Number(item.sbp) }} / {{ Number(item.dbp) }}</span>
+              </p>
+              <p>
+                <span>血氧（%）</span>
+                <span>{{ item.spo2 }}</span>
+              </p>
+              <p>
+                <span>意识</span>
+                <span>{{
+                item.consciousness
+              }}</span>
+              </p>
+            </van-cell>
+          </div>
+        </van-collapse-item>
+        <van-collapse-item title="辅助检查" name="exhibit5">
+          <div class="center">
+            <p>心电图</p>
+            <div
+              class="task-electrocardiogram-uploaded"
+              v-if="firstAid.supplementaryExaminationDto?.ecg"
+            >
+              <van-swipe-cell
+                v-for="item in firstAid.supplementaryExaminationDto.ecg"
+                :key="item"
+              >
+                <van-cell class="card-item">
+                  <van-image
+                    :key="item"
+                    :src="item"
+                    @click="imagePreview(item)"
+                    fit="contain"
+                  />
+                </van-cell>
+              </van-swipe-cell>
+            </div>
+            <p>
+              <span>血糖（mmol/L）</span
+              ><span>{{
+                firstAid.supplementaryExaminationDto.bloodglucose
+              }}</span>
+            </p>
+            <p class="titleText">
+              POCT
+            </p>
+            <p>
+              <span>检查时间</span>
+              <span>{{
+                firstAid.supplementaryExaminationDto?.medPhepPoctEntity
+                  ?.checkTime
+              }}</span>
+            </p>
+            <p>
+              <span>报告时间</span>
+              <span>{{
+                firstAid.supplementaryExaminationDto?.medPhepPoctEntity
+                  ?.reportTime
+              }}</span>
+            </p>
+            <p>
+              <span
+                >TnT（{{
+                firstAid?.supplementaryExaminationDto?.medPhepPoctEntity?.tntUnit
+              }}）
+              </span>
+              <span>{{
+                firstAid.supplementaryExaminationDto?.medPhepPoctEntity?.tnt
+              }}</span>
+            </p>
+            <p>
+              <span
+                >TnI（{{
+                firstAid.supplementaryExaminationDto.medPhepPoctEntity.tnlUnit
+              }}）</span
+              >
+              <span>{{
+                firstAid.supplementaryExaminationDto.medPhepPoctEntity?.tnl
+              }}</span>
+            </p>
+            <!-- <p>
+            现场照片:
+          </p>
+          <div class="task-electrocardiogram-uploaded ">
+            <van-swipe-cell
+              v-for="item in firstAid.supplementaryExaminationDto.sitePhotos"
+              :key="item"
+            >
+              <van-cell class="card-item">
+                <van-image
+                  :key="item"
+                  :src="item"
+                  @click="imagePreview(item)"
+                  fit="contain"
+                />
+              </van-cell>
+            </van-swipe-cell>
+          </div> -->
+            <!-- <p>
+            现场视频:
+            <van-popup v-model="previewVideoVisible" closeable>
+              <video
+                class="video-play"
+                :src="firstAid.supplementaryExaminationDto.liveVideo"
+                loop
+                controls
+              />
+            </van-popup>
+          </p> -->
+            <!-- <div class="flex-c-c">
+            <div
+              class="card-item"
+              v-for="item in firstAid.supplementaryExaminationDto.liveVideo"
+              :key="item"
+              @click="viewVideo"
+            >
+              <video :src="item" class="video-thumb"></video>
+            </div>
+          </div> -->
+          </div>
+        </van-collapse-item>
+        <van-collapse-item title="专科评估" name="exhibit6">
+          <div class="center">
+            <p>
+              <span>TI评估</span>
+              <span>{{ firstAid.supplementaryExaminationDto.tiScore }}</span>
+            </p>
+            <p>
+              <span>GCS评估</span>
+              <span>{{ firstAid.supplementaryExaminationDto.gcsScore }}</span>
+            </p>
+            <p>
+              <span>胸痛评估</span>
+              <span>{{
+                firstAid.supplementaryExaminationDto.chestPainAssessment
+              }}</span>
+            </p>
+            <p>
+              <span>killip分级</span>
+              <span>{{ firstAid.supplementaryExaminationDto.killip }}</span>
+            </p>
+            <p>
+              <span>FAST评估</span>
+              <span>{{
+                firstAid.supplementaryExaminationDto.fastAssessment
+              }}</span>
+            </p>
+            <p>
+              <span>其他检查</span>
+              <span>{{ firstAid.supplementaryExaminationDto.otherCheck }}</span>
+            </p>
+          </div>
+        </van-collapse-item>
+        <van-collapse-item title="诊断处理" name="exhibit7">
+          <div class="center">
+            <p>
+              <span>初步诊断</span>
+              <span>{{ firstAid.diagnosticProcessingDto.diagnosis }}</span>
+            </p>
+            <p>
+              <span>病情判断</span>
+              <span>{{
+                firstAid?.medicalRecordInfoDto?.conditionGrade
+              }}</span>
+            </p>
+            <p>
+              <span>急救措施</span>
+              <span v-if="firstAid?.medPhepMeasuresEntityList">
+                <div
+                  v-for="item in firstAid?.medPhepMeasuresEntityList"
+                  :key="item.id"
+                >
+                  {{ item.measureName }} - {{ item.opTime }}
+                </div>
+              </span>
+            </p>
+            <p>
+              <span>用药</span>
+              <span v-if="firstAid?.diagnosticProcessingDto?.emergencyOrders">
+                <div
+                  v-for="item in firstAid?.diagnosticProcessingDto
+                    ?.emergencyOrders"
+                  :key="item.id"
+                >
+                  {{ item.medPhepDrugEntity.createdDate }}
+                  {{ item.medPhepDrugEntity.name }}
+                  ({{ item?.medPhepEmergencyOrdersEntity?.dose }}
+                  {{ item.medPhepDrugEntity.drugUnit }})
+                </div>
+              </span>
+            </p>
+            <p>
+              <span>病情转归</span>
+              <span>{{
+                firstAid?.medicalRecordInfoDto?.rescueChangeResultName
+              }}</span>
+            </p>
+            <p>
+              <span>出诊结果</span>
+              <span>{{
+                firstAid?.medicalRecordInfoDto?.treatmentResultName
+              }}</span>
+            </p>
+            <p>
+              <span>送往医院</span>
+              <span>{{ firstAid?.medicalRecordInfoDto?.toHospitalName }}</span>
+            </p>
+          </div>
+        </van-collapse-item>
+      </van-collapse>
+    </div>
+  </med-view-container>
+</template>
+<script>
+import { ImagePreview } from 'vant'
+import { FirstAidPreview } from '@model/commonModel'
+import hospitalMixin from '@mixins/hospitalMixin'
+import { mapGetters } from 'vuex'
+import das from '@constant/das'
+
+export default {
+  mixins: [hospitalMixin],
+  data() {
+    return {
+      patientHistory: {},
+      missionId: '',
+      query: {
+        sysId: das.sysId,
+        hospitalId: ''
+      },
+      show: false,
+      extend: '1', // 初步诊断标识
+      exhibit: [
+        'exhibit1',
+        'exhibit2',
+        'exhibit3',
+        'exhibit4',
+        'exhibit5',
+        'exhibit6',
+        'exhibit7'
+      ],
+      diagnosisTwo: '',
+      firstAid: FirstAidPreview()
+    }
+  },
+  async created() {
+    const patientHistory = this.$route.query.patientHistory
+    this.patientHistory = patientHistory || {}
+    this.missionId = patientHistory?.missionId
+    this.query.hospitalId = patientHistory?.toHospital
+
+    await this.getPreHospitalFirstAidRecord()
+  },
+
+  computed: {
+    ...mapGetters(['dictionary']),
+    attachPathList() {
+      if (this.firstAid.supplementaryExaminationDto?.ecg) {
+        return this.firstAid.supplementaryExaminationDto?.ecg
+      }
+      return []
+    }
+  },
+  methods: {
+    async getPreHospitalFirstAidRecord() {
+      const params = { ...this.query, missionId: this.missionId }
+      const res = await this.$api.preHospitalPush.getMedicalRecord(params)
+      if (res.code === 0) {
+        this.firstAid.taskInfoDto = res.data.taskInfoDto
+        this.firstAid.medicalRecordInfoDto = res.data.medicalRecordInfoDto
+        this.firstAid.physicalExaminationDtoList =
+          res.data.physicalExaminationDtoList
+        this.firstAid.supplementaryExaminationDto =
+          res.data.supplementaryExaminationDto || {}
+        this.firstAid.diagnosticProcessingDto =
+          res.data.diagnosticProcessingDto || {}
+        this.firstAid.patientBaseInfoDto = res.data.patientBaseInfoDto || {}
+        this.firstAid.medPhepMeasuresEntityList =
+          res.data.medPhepMeasuresEntityList
+      }
+    },
+    async handleBind() {
+      try {
+        const item = this.patientHistory
+        const type = item.source === 'phep' ? 1 : 2
+        if (!item.relationId) {
+          throw new Error('没有relationId')
+        }
+        const p = {
+          hospitalId: this.hospitalAndArea(),
+          relationId: item.relationId,
+          visitId: item.relationId,
+          type
+        }
+        const res = await this.$api.service.getEmIdPatient(p)
+        if (res.status === 200) {
+        if (res.result.isRegister) {
+          this.$toast('该患者已建档')
+          } else {
+            item.emId = res.result.emId
+            this.$router.push({
+              path: '/patient/document/addInformation',
+              query: {
+                from: 'import',
+                patientHistory: { ...item, type }
+              }
+            })
+          }
+        } else {
+          throw new Error(res.message || '接口异常')
+        }
+      } catch (err) {
+        this.$notify(err.message)
+      }
+    },
+    imagePreview(item) {
+      ImagePreview(item)
+    },
+    conversionOne(str, list) {
+      if (str && list) {
+        const matched = list.find(valx => valx.value === str)
+        return matched?.label
+      }
+    },
+    // 多个value转换汉字
+    conversion(str, list) {
+      if (str && list) {
+        const arrValues = str ? str.split(',') : []
+        const labels = arrValues.map(val => {
+          const matched = list.find(item => item.value === val)
+          return matched?.label
+        })
+        return labels.join(',')
+      }
+    },
+    collapseChange(val) {
+      if (val) {
+        this.diagnosisTwo = ''
+      }
+    },
+    // 时间格式化
+    formatDate(date) {
+      if (!date) return ''
+      return this.$moment(date).format('YYYY-MM-DD HH:mm')
+    },
+    jumpToDetails() {
+      this.$router.push({
+        path: '/patient/preHospitalPush'
+      })
+    }
+  },
+  watch: {
+    $route: {
+      immediate: false,
+      handler(val) {
+        this.missionId = val.query.businessId
+        if (this.$route.path === '/preHospitalPreview') {
+          this.getPreviewList()
+        }
+      },
+      deep: true
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+@import './index.less';
+.titleText {
+  text-align: center;
+  font-weight: bold;
+}
+.scroll-view {
+  max-height: calc(100vh - 4.1rem);
+  overflow: auto;
+}
+</style>

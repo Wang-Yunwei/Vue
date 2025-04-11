@@ -1,0 +1,244 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  font-family: 'PingFangSC-Light', 'PingFang SC', 'STHeitiSC-Light',
+    'Helvetica-Light', 'Arial', 'sans-serif';
+}
+
+* {
+  touch-action: pan-y;
+}
+
+// common
+.flex-c-c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-c-a {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.flex-c-b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-c-s {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-c-e {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.flex-c-w {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+// 针对弹层
+.med-popup-container-wrapper {
+  .task-part-title {
+    &:only-child {
+      display: none;
+    }
+    > span:nth-of-type(1) {
+      display: inline-block;
+      width: 12px;
+      height: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255), #5e74fe);
+      margin-right: 10px;
+      border-radius: 6px;
+    }
+
+    span:nth-of-type(2) {
+      display: inline-block;
+      color: #323233;
+      font-size: 36px;
+      line-height: 2.2;
+      font-weight: bold;
+    }
+    border-bottom: 1px solid #444fdb;
+    margin: 0 32px;
+  }
+  // 单选框样式修改为 按钮
+  .van-radio-group.radio-btn-type {
+    .van-radio {
+      margin-right: 20px;
+
+      .van-radio__icon {
+        width: 0;
+        height: 0;
+        .van-icon {
+          width: 0;
+          height: 0;
+          display: none;
+          &:before {
+            display: none;
+          }
+        }
+        &.van-radio__icon--checked {
+          width: 0;
+          height: 0;
+        }
+
+        &.van-radio__icon--checked + .van-radio__label {
+          background: #333bd2;
+          color: #fff;
+        }
+      }
+
+      .van-radio__label {
+        border: 1px solid #dadada;
+        padding: 5px 20px;
+        border-radius: 44px;
+        margin: 0;
+      }
+    }
+  }
+  // cell
+  .van-cell {
+    font-size: @font-md-size;
+    justify-content: space-between;
+
+    .van-cell__title,
+    .van-cell__label {
+      font-size: @font-md-size;
+      margin-right: 20px;
+      max-width: 280px;
+      min-width: 280px;
+    }
+    .van-cell__value {
+      font-size: @font-md-size;
+      span {
+        font-size: @font-md-size;
+      }
+      text-align: left;
+    }
+    .van-field__body {
+      font-size: @font-md-size;
+    }
+  }
+  // button
+  .van-button {
+    .van-button__content {
+      font-size: @font-md-size;
+    }
+  }
+
+  // uploader
+  .van-field__right-icon {
+    padding: 0;
+  }
+}
+
+// 弹窗
+.van-popup {
+  // cell
+  .van-cell {
+    font-size: @font-md-size;
+    justify-content: space-between;
+
+    .van-cell__title,
+    .van-cell__label {
+      font-size: @font-md-size;
+      margin-right: 20px;
+      max-width: 280px;
+      min-width: 280px;
+    }
+
+    .van-cell__value {
+      font-size: @font-md-size;
+
+      span {
+        font-size: @font-md-size;
+      }
+
+      text-align: left;
+    }
+
+    .van-field__body {
+      font-size: @font-md-size;
+    }
+  }
+}
+
+// 禁止表单编辑修改
+.view-mode {
+  form *,
+  .van-form *,
+  .van-field,
+  .van-radio-group,
+  .van-checkbox-group,
+  .van-button {
+    pointer-events: none;
+  }
+  .van-field,
+  .van-cell,
+  .van-button {
+    filter: grayscale(1);
+    opacity: 0.7;
+    .van-field__body {
+      input::placeholder {
+        color: transparent;
+      }
+    }
+  }
+  .van-cell__title span,
+  .van-field__body input,
+  .van-cell__value,
+  .med-select-value {
+    color: #646566;
+  }
+  .van-cell .van-cell__value {
+    .van-cell {
+      opacity: 1;
+    }
+    .van-field__control,
+    & {
+      .van-radio-group > .van-radio {
+        .van-radio__label {
+          color: #646566;
+        }
+        div.van-radio__icon--checked + span.van-radio__label {
+          background-color: #a0a0a0;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .estimating-wrapper {
+    &,
+    * {
+      pointer-events: auto;
+    }
+  }
+  .med-ecg-field-wrapper .van-icon-coupon-o {
+    pointer-events: auto;
+  }
+  &.estimating-page-wrapper {
+    .confirm-btn {
+      display: none;
+    }
+  }
+  .photo-picker .van-image {
+    &,
+    * {
+      pointer-events: auto;
+    }
+  }
+}
+
+
+.van-notify {
+  top:0px;
+  height: 148px;  
+  padding-top: 58px;
+}

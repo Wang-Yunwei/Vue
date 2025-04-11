@@ -10,7 +10,8 @@
                 </el-button>
             </el-col>
         </el-row>
-        <el-dialog :title="scoreType === '3' ? 'GCS评分' : 'TI评分'" width="64rem" :visible.sync="isShowScore" :close-on-click-modal="false">
+        <el-dialog :title="scoreType === '3' ? 'GCS评分' : 'TI评分'" width="64rem" :visible.sync="isShowScore"
+            :close-on-click-modal="false">
             <el-form ref="form" label-position="top" :model="form" label-width="50px" size="mini">
                 <el-row>
                     <el-col :span="5">
@@ -47,7 +48,8 @@
                 <el-collapse v-model="colValue">
                     <el-collapse-item v-for="(itemA, indexA) in list" :key="indexA" :title="itemA.name" :name="indexA">
                         <el-radio-group v-model="itemA.value" :disabled="isReadonly">
-                            <el-radio v-for="(itemB, indexB) in itemA.childList" :key="indexB" :label="itemB.value" @click.native.prevent=" isReadonly ? '' : clickRadio(indexA, itemB.value)">
+                            <el-radio v-for="(itemB, indexB) in itemA.childList" :key="indexB" :label="itemB.value"
+                                @click.native.prevent=" isReadonly ? '' : clickRadio(indexA, itemB.value)">
                                 {{ itemB.label }}
                             </el-radio>
                         </el-radio-group>
@@ -129,6 +131,13 @@ export default {
                 this.$api.scoreUpdate(this.form).then(res => {
                     if (res.code === '000000') {
                         this.$emit('input', this.form)
+                        this.isShowScore = false
+                    }
+                })
+            } else {
+                this.$api.scoreDelete(this.value.id).then(res => {
+                    if (res.code === '000000') {
+                        this.$emit('input', {})
                         this.isShowScore = false
                     }
                 })

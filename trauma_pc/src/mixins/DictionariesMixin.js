@@ -151,6 +151,10 @@ export default {
     PUPIL_0001() {
       return this.dictionary['PUPIL_0001']
     },
+    // 患者类型
+    PATIENT_TYPE() {
+      return this.dictionary['PATIENT_TYPE']
+    },
     // 二维码
     QRCODE_00001() {
       return this.dictionary['QRCODE_00001']

@@ -1,0 +1,47 @@
+@import '@/assets/styles/common/time/time-axis';
+.timeline-panel {
+  .top-block {
+    padding: 18px 20px 8px 20px;
+
+    .countTime {
+      color: #4f5e7b;
+      font-size: @font-xs-size;
+    }
+
+    p {
+      position: relative;
+      width: 129px;
+      height: 124px;
+      background: #ffffff;
+      border: 1px solid rgba(79, 94, 123, 0.5);
+      border-radius: 15px;
+      display: block;
+      padding-top: 16px;
+      overflow: hidden;
+
+      span {
+        text-align: center;
+        font-size: 32px;
+
+        &:nth-of-type(1) {
+          display: block;
+          font-size: @font-xxl-size;
+          text-align: center;
+        }
+
+        &:nth-of-type(2) {
+          display: block;
+          font-size: @font-sm-size;
+        }
+
+        &:nth-of-type(3n + 3) {
+          display: block;
+          font-size: 26px;
+          padding: 0 6px 0 10px;
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+}
