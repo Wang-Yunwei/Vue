@@ -5,19 +5,27 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken, setToken } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
+import { getAuthTokenSso } from '@/api/login'
 
 NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login', '/auth-redirect']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   NProgress.start()
   document.title = getPageTitle(to.meta.title)
-  const hasToken = to.query.token || getToken() || ''
-  setToken(hasToken)
+  let hasToken = to.query.token || getToken() || ''
   if (to.query?.sso) {
     sessionStorage.setItem('ssoUrl', to.query.sso)
   }
+  if (to.query?.callUrl) {
+    await getAuthTokenSso({ callUrl: to.query.callUrl }).then(res => {
+      if (res.code === '000000') {
+        hasToken = res.body.jwt_token
+      }
+    })
+  }
+  setToken(hasToken)
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' })

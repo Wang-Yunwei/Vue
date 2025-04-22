@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 const TokenKey = 'Trauma-Token'
 // const JwtTokenKey = 'Jwt-Token'
@@ -9,7 +9,6 @@ export function getToken() {
 }
 
 export function setToken(token) {
-
   // return Cookies.set(TokenKey, token)
   return localStorage.setItem(TokenKey, token)
 }

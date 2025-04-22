@@ -8,20 +8,30 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="form.username" placeholder="请输入用户名" name="username" type="text" tabindex="1" autocomplete="on" />
+        <el-input
+          v-model="form.username" placeholder="请输入用户名" name="username" type="text" tabindex="1"
+          autocomplete="on"
+        />
       </el-form-item>
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password" :rules="{ required: true, message: '请入正确的密码', trigger: 'blur' }">
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
-          <el-input v-model="form.password" placeholder="请输入密码" :key="passwordType" :type="passwordType" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+          <el-input
+            :key="passwordType" v-model="form.password" placeholder="请输入密码" :type="passwordType" name="password"
+            tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
           <span class="show-pwd" @click="showPwd">
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
       </el-tooltip>
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button
+        type="primary" style="width: 100%; margin-bottom: 30px"
+        @click.native.prevent="handleLogin"
+      >登录</el-button>
     </el-form>
   </div>
 </template>
@@ -37,6 +47,18 @@ export default {
       loading: false,
       redirect: undefined,
       otherQuery: {}
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query
+        if (query) {
+          this.redirect = query.redirect
+          this.otherQuery = this.getOtherQuery(query)
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -74,17 +96,6 @@ export default {
         }
         return acc
       }, {})
-    }
-  }, watch: {
-    $route: {
-      handler: function (route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
-        }
-      },
-      immediate: true
     }
   }
 }
